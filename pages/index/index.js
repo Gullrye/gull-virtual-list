@@ -43,15 +43,19 @@ Page({
     // console.log('my complete----------------')
   },
   renderNext() {
+    let nextList = virtualList.renderNext()
     this.setData({
-      twoList: virtualList.renderNext()
+      twoList: [...nextList]
     })
   },
   onScroll: throttle(function () {
     console.log('scroll-------------------')
-    this.setData({
-      twoList: virtualList.getTwoList()
-    })
-    console.log('%c [ twoList ]-54', 'font-size:13px; background:#67deda; color:#abffff;', this.data.twoList)
-  }, 600)
+    let newList = virtualList.getTwoList()
+    if(JSON.stringify(newList) !== JSON.stringify(this.data.twoList)) {
+      this.setData({
+        twoList: [...newList]
+      })
+      console.log('%c [ newList ]-58', 'font-size:13px; background:#0000ff; color:#d3dcf0;', newList)
+    }
+  }, 300)
 })

@@ -27,8 +27,7 @@ export default class GullVirtualList {
     this.state = {
       wholePageIndex: 0,
       twoList: [],
-      isComplete: false,
-      innerScrollTop: 0
+      isComplete: false
     }
   }
   segmentList(list = this.props.list) {
@@ -46,6 +45,9 @@ export default class GullVirtualList {
     this.initList = _list
     this.state.twoList = this.initList.slice(0, 1)
     // return this.initList
+    setTimeout(() => {
+      this.setHeight()
+    }, 0)
     return this.state.twoList
   }
   handleComplete() {
@@ -92,7 +94,7 @@ export default class GullVirtualList {
     return this.state.twoList
   }
   renderNext() {
-    if (this.state.wholePageIndex >= this.initList.length - 1) {
+    if (this.state.wholePageIndex === this.initList.length - 1) {
       console.log('无下一页')
       this.handleComplete()
       return this.state.twoList

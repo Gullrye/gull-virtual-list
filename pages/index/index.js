@@ -6,7 +6,6 @@ Page({
     twoList: [],
     listId: 'gull-list',
     pageNum: 0,
-    virtualList: null,
     scrollTop: -1
   },
   onLoad() {
@@ -22,15 +21,14 @@ Page({
     that.setData({
       twoList: virtualList.segmentList()
     })
-    virtualList.setHeight()
   },
   getOriginData() {
     let i = 0
     let arr = []
     while (i < 100) {
-      if (i > 10 && i < 20) {
+      if (i >= 10 && i < 20) {
         arr.push({ name: 'Milan', age: 18, id: i })
-      } else if (i > 20 && i < 40) {
+      } else if (i >= 20 && i < 40) {
         arr.push({ name: '-------', age: 18, id: i })
       } else {
         arr.push({ name: 'Mike', age: 12, id: i })
@@ -45,12 +43,12 @@ Page({
       icon: 'success'
     })
   },
-  renderNext() {
+  renderNext: throttle(function () {
     let nextList = virtualList.renderNext()
     this.setData({
       twoList: [...nextList]
     })
-  },
+  }, 300),
   onScroll: throttle(function () {
     let newList = virtualList.getTwoList()
     if (JSON.stringify(newList) !== JSON.stringify(this.data.twoList)) {

@@ -10,7 +10,7 @@ Page({
   },
   onLoad() {
     let that = this
-    let originData = that.init()
+    let originData = that.getOriginData()
     virtualList = new GullVirtualList({
       list: originData,
       pageNum: that.data.pageNum,
@@ -23,7 +23,7 @@ Page({
     })
     virtualList.setHeight()
   },
-  init() {
+  getOriginData() {
     let i = 0
     let arr = []
     while (i < 100) {
@@ -38,7 +38,12 @@ Page({
     }
     return arr
   },
-  handleComplete() {},
+  handleComplete() {
+    wx.showToast({
+      title: '列表加载完成',
+      icon: 'success'
+    })
+  },
   renderNext() {
     let nextList = virtualList.renderNext()
     this.setData({
@@ -55,7 +60,7 @@ Page({
   }, 300),
   search(e) {
     let keyword = e.detail.value
-    let originData = this.init()
+    let originData = this.getOriginData()
     let searchResult = originData.filter((item) => item.name.includes(keyword))
     this.setData({
       twoList: virtualList.segmentList(searchResult)

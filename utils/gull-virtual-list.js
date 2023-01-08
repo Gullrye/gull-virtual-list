@@ -40,7 +40,9 @@ export default class GullVirtualList {
       arr = list.splice(0, this.segmentNum)
       _list.push(arr)
     }
-    this.handleComplete()
+    if(_list.length <= 1) {
+      this.handleComplete()
+    }
     this.initList = _list
     this.state.twoList = this.initList.slice(0, 1)
     // return this.initList
@@ -92,6 +94,7 @@ export default class GullVirtualList {
   renderNext() {
     if (this.state.wholePageIndex >= this.initList.length - 1) {
       console.log('无下一页')
+      this.handleComplete()
       return this.state.twoList
     }
     this.state.wholePageIndex++

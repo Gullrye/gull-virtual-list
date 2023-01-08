@@ -1,0 +1,7 @@
+.box .items .item {
+  height: 150rpx;
+  border: 2rpx solid green;
+}
+.wrap {
+  border: 4rpx solid red;
+}

@@ -1,5 +1,0 @@
-<view class="gull-virtual-list">
-  <view id='{{listId}}'>
-    <slot name='el'></slot>
-  </view>
-</view>

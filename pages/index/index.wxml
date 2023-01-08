@@ -1,8 +1,8 @@
 <view class="box">
   <scroll-view class="items" id='{{listId}}' scroll-y="{{true}}" bindscrolltolower="renderNext" bindscroll="onScroll" lower-threshold="250" style="height:100vh">
     <block wx:for="{{twoList}}" wx:for-index="pageIndex" wx:key="pageIndex">
-      <view class="wrap wrap_{{pageIndex}}" style="{{item.height?'height:'+item.height+'px':''}}">
-        <view class="item" wx:for="{{item}}" wx:for-item="el" wx:key="index" data-key="{{pageIndex*10+index}}" style="{{el.name==='-------'?'height:400rpx':''}}">
+      <view class="wrap wrap_{{pageIndex}}" style="{{item&&item.height?'height:'+item.height+'px':''}}">
+        <view class="item" wx:for="{{item}}" wx:for-item="el" wx:key="id" style="{{el.name==='-------'?'height:400rpx':''}}">
           {{el.name}}
         </view>
       </view>

@@ -2,10 +2,10 @@ export default class GullVirtualList {
   constructor(props) {
     this.props = {
       screenNum: 0.5,
+      list: [],
       ...props
     }
-    const { list, pageNum, segmentNum, listId } = props
-    this.list = list || []
+    const { pageNum, segmentNum, listId } = props
     this.pageNum = pageNum || 0
     this.segmentNum = segmentNum || 10
     this.listId = listId || 'gull-list'
@@ -28,7 +28,7 @@ export default class GullVirtualList {
       innerScrollTop: 0
     }
   }
-  segmentList(list = this.list) {
+  segmentList(list = this.props.list) {
     let arr = []
     const _list = []
     while (list.length > 0) {
@@ -64,10 +64,7 @@ export default class GullVirtualList {
       }
       // console.log(that.pageHeightArr)
     })
-    that.handleObserve()
-  }
-  handleObserve() {
-    this.miniObserve()
+    that.miniObserve()
   }
   miniObserve() {
     const that = this
@@ -81,7 +78,6 @@ export default class GullVirtualList {
       })
       .observe(`#${that.listId} .wrap_${wholePageIndex}`, (res) => {
         const { twoList } = that.state
-        let _a = twoList[wholePageIndex]
         if (res && res.intersectionRatio <= 0) {
           twoList[wholePageIndex] = {
             height: that.pageHeightArr[wholePageIndex]
@@ -97,10 +93,16 @@ export default class GullVirtualList {
         )
         console.log(twoList)
       })
+  }
+  getTwoList() {
     return this.state.twoList
   }
   renderNext() {
-    console.log('%c [ renderNext ]-102', 'font-size:13px; background:#bf512b; color:#ff956f;', 'renderNext')
+    console.log(
+      '%c [ renderNext ]-102',
+      'font-size:13px; background:#bf512b; color:#ff956f;',
+      'renderNext'
+    )
     if (this.state.wholePageIndex >= this.initList.length - 1) {
       console.log('无下一页')
       return this.state.twoList
@@ -108,6 +110,9 @@ export default class GullVirtualList {
     this.state.wholePageIndex++
     let wholePageIndex = this.state.wholePageIndex
     this.state.twoList[wholePageIndex] = this.initList[wholePageIndex]
+    setTimeout(() => {
+      this.setHeight()
+    }, 0)
     return this.state.twoList
   }
 }

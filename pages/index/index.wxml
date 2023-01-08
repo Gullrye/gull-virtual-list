@@ -2,7 +2,7 @@
   <view class="search-box">
     <input class="search-bar" placeholder="search" type="text" bindblur="search" />
   </view>
-  <scroll-view class="items" id='{{listId}}' scroll-y="{{true}}" bindscrolltolower="renderNext" bindscroll="onScroll" lower-threshold="250" style="height:100vh">
+  <scroll-view class="items" id='{{listId}}' scroll-y="{{true}}" bindscrolltolower="renderNext" bindscroll="onScroll" lower-threshold="250" style="height:100vh" scroll-top="{{scrollTop}}">
     <block wx:for="{{twoList}}" wx:for-index="pageIndex" wx:key="pageIndex">
       <view class="wrap wrap_{{pageIndex}}" style="{{item.height?'height:'+item.height+'px':''}}">
         <view class="item" wx:for="{{item}}" wx:for-item="el" wx:key="id" style="{{el.name==='-------'?'height:400rpx':''}}">

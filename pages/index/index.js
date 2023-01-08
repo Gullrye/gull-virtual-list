@@ -6,7 +6,8 @@ Page({
     twoList: [],
     listId: 'gull-list',
     pageNum: 0,
-    virtualList: null
+    virtualList: null,
+    scrollTop: -1
   },
   onLoad() {
     let that = this
@@ -63,7 +64,8 @@ Page({
     let originData = this.getOriginData()
     let searchResult = originData.filter((item) => item.name.includes(keyword))
     this.setData({
-      twoList: virtualList.segmentList(searchResult)
+      twoList: virtualList.segmentList(searchResult),
+      scrollTop: 0
     })
   }
 })

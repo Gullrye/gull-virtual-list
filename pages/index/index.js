@@ -1,4 +1,3 @@
-const app = getApp()
 import GullVirtualList from '../../utils/gull-virtual-list'
 import { throttle } from '../../utils/util'
 let virtualList = null
@@ -30,7 +29,7 @@ Page({
     while (i < 100) {
       if (i > 10 && i < 20) {
         arr.push({ name: 'Milan', age: 18, id: i })
-      } else if (i > 20 && i < 30) {
+      } else if (i > 20 && i < 40) {
         arr.push({ name: '-------', age: 18, id: i })
       } else {
         arr.push({ name: 'Mike', age: 12, id: i })
@@ -39,9 +38,7 @@ Page({
     }
     return arr
   },
-  handleComplete() {
-    // console.log('my complete----------------')
-  },
+  handleComplete() {},
   renderNext() {
     let nextList = virtualList.renderNext()
     this.setData({
@@ -49,13 +46,19 @@ Page({
     })
   },
   onScroll: throttle(function () {
-    console.log('scroll-------------------')
     let newList = virtualList.getTwoList()
-    if(JSON.stringify(newList) !== JSON.stringify(this.data.twoList)) {
+    if (JSON.stringify(newList) !== JSON.stringify(this.data.twoList)) {
       this.setData({
         twoList: [...newList]
       })
-      console.log('%c [ newList ]-58', 'font-size:13px; background:#0000ff; color:#d3dcf0;', newList)
     }
-  }, 300)
+  }, 300),
+  search(e) {
+    let keyword = e.detail.value
+    let originData = this.init()
+    let searchResult = originData.filter((item) => item.name.includes(keyword))
+    this.setData({
+      twoList: virtualList.segmentList(searchResult)
+    })
+  }
 })

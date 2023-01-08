@@ -5,3 +5,24 @@
 .wrap {
   border: 4rpx solid red;
 }
+.box .items {
+  margin-top: 100rpx;
+  -webkit-overflow-scrolling: touch;
+}
+.search-box {
+  position: fixed;
+  left: 0;
+  top: 0;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0 20rpx;
+  background: #fff;
+  z-index: 99;
+}
+input.search-bar {
+  height: 60rpx;
+  padding-left: 40rpx;
+  border: 2rpx solid #666;
+  border-radius: 100rpx;
+  background-color: #eee;
+}

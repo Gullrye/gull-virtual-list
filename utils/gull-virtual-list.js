@@ -19,6 +19,9 @@ export default class GullVirtualList {
       console.error('系统信息获取失败')
     }
 
+    this.initData()
+  }
+  initData() {
     this.initList = []
     this.pageHeightArr = []
     this.state = {
@@ -29,6 +32,8 @@ export default class GullVirtualList {
     }
   }
   segmentList(list = this.props.list) {
+    this.initData()
+
     let arr = []
     const _list = []
     while (list.length > 0) {
@@ -36,7 +41,6 @@ export default class GullVirtualList {
       _list.push(arr)
     }
     this.handleComplete()
-    // this.setHeight(_list)
     this.initList = _list
     this.state.twoList = this.initList.slice(0, 1)
     // return this.initList
@@ -51,18 +55,12 @@ export default class GullVirtualList {
     const that = this
     const { wholePageIndex } = this.state
 
-    if (wholePageIndex > that.initList.length - 1) {
-      console.log('无下一页2')
-      return
-    }
-
     const query = wx.createSelectorQuery()
     query.select(`#${that.listId} .wrap_${wholePageIndex}`).boundingClientRect()
     query.exec(function (res) {
       if (res && list && list.length) {
         that.pageHeightArr.push(res[0].height || 0)
       }
-      // console.log(that.pageHeightArr)
     })
     that.miniObserve()
   }
@@ -86,23 +84,12 @@ export default class GullVirtualList {
           twoList[wholePageIndex] = that.initList[wholePageIndex]
         }
         that.state.twoList = twoList
-        console.log(
-          '%c [ `twoList` ]-83',
-          'font-size:13px; background:#0cd4d6; color:#50ffff;',
-          `#${that.listId} .wrap_${wholePageIndex}`
-        )
-        console.log(twoList)
       })
   }
   getTwoList() {
     return this.state.twoList
   }
   renderNext() {
-    console.log(
-      '%c [ renderNext ]-102',
-      'font-size:13px; background:#bf512b; color:#ff956f;',
-      'renderNext'
-    )
     if (this.state.wholePageIndex >= this.initList.length - 1) {
       console.log('无下一页')
       return this.state.twoList

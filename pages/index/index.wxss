@@ -19,7 +19,7 @@
   background: #fff;
   z-index: 99;
 }
-input.search-bar {
+.search-bar {
   height: 60rpx;
   padding-left: 40rpx;
   border: 2rpx solid #666;

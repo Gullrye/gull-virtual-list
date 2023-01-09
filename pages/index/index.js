@@ -1,6 +1,5 @@
 import GullVirtualList from '../../utils/gull-virtual-list'
 import { throttle } from '../../utils/util'
-let virtualList = null
 Page({
   data: {
     twoList: [],
@@ -11,7 +10,7 @@ Page({
   onLoad() {
     let that = this
     let originData = that.getOriginData()
-    virtualList = new GullVirtualList({
+    that.virtualList = new GullVirtualList({
       list: originData,
       pageNum: that.data.pageNum,
       segmentNum: 10,
@@ -19,7 +18,7 @@ Page({
       listId: 'gull-list'
     })
     that.setData({
-      twoList: virtualList.segmentList()
+      twoList: that.virtualList.segmentList()
     })
   },
   getOriginData() {
@@ -44,13 +43,13 @@ Page({
     })
   },
   renderNext: throttle(function () {
-    let nextList = virtualList.renderNext()
+    let nextList = this.virtualList.renderNext()
     this.setData({
       twoList: [...nextList]
     })
   }, 300),
   onScroll: throttle(function () {
-    let newList = virtualList.getTwoList()
+    let newList = this.virtualList.getTwoList()
     if (JSON.stringify(newList) !== JSON.stringify(this.data.twoList)) {
       this.setData({
         twoList: [...newList]
@@ -62,7 +61,7 @@ Page({
     let originData = this.getOriginData()
     let searchResult = originData.filter((item) => item.name.includes(keyword))
     this.setData({
-      twoList: virtualList.segmentList(searchResult),
+      twoList: this.virtualList.segmentList(searchResult),
       scrollTop: 0
     })
   }
